@@ -1,3 +1,4 @@
+import { useBoardStore } from "@/store/BoardStore";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Draggable, Droppable } from "react-beautiful-dnd"
 import { TodoCard } from "./TodoCard";
@@ -17,6 +18,11 @@ const idToColumnText: {
 }
 
 export const Column = ({ id, todos, index }: Props) => {
+  const [searchString, setSearchString] = useBoardStore(({ searchString, setSearchString }) => [
+    searchString,
+    setSearchString
+  ])
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -34,28 +40,40 @@ export const Column = ({ id, todos, index }: Props) => {
               >
                 <h2 className="flex justify-between font-bold text-xl p-2">
                   {idToColumnText[id]}
-                  <span className="text-gray-500 bg-gray-200 rounded-full px-2 py-1 text-sm font-normal">{todos.length}</span>
+                  <span className="text-gray-500 bg-gray-200 rounded-full px-2 py-1 text-sm font-normal">
+                    {!searchString
+                      ? todos.length
+                      : todos.filter((todo) =>
+                        todo.title
+                          .toLowerCase()
+                          .includes(searchString.toLowerCase())
+                      ).length}
+                  </span>
                 </h2>
 
                 <div className="space-y-2">
-                  {todos.map((todo, index) => (
-                    <Draggable
-                      key={todo.$id}
-                      draggableId={todo.$id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <TodoCard
-                          todo={todo}
-                          index={index}
-                          id={id}
-                          innerRef={provided.innerRef}
-                          draggableProps={provided.draggableProps}
-                          dragHandleProps={provided.dragHandleProps}
-                        />
-                      )}
-                    </Draggable>
-                  ))}
+                  {todos.map((todo, index) => {
+                    if (searchString && !todo.title.toLowerCase().includes(searchString.toLowerCase())) return null
+
+                    return (
+                      <Draggable
+                        key={todo.$id}
+                        draggableId={todo.$id}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <TodoCard
+                            todo={todo}
+                            index={index}
+                            id={id}
+                            innerRef={provided.innerRef}
+                            draggableProps={provided.draggableProps}
+                            dragHandleProps={provided.dragHandleProps}
+                          />
+                        )}
+                      </Draggable>
+                    )
+                  })}
 
                   {provided.placeholder}
 

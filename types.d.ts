@@ -1,9 +1,9 @@
 interface Board {
-  columns: Map<StatusEnum, Column>;
+  columns: Map<Status, Column>;
 }
 
 interface Column {
-  id: StatusEnum;
+  id: Status;
   todos: Todo[];
 }
 

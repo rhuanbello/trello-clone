@@ -7,9 +7,15 @@ interface BoardState {
   getBoard: () => void;
   setBoardState: (board: Board) => void;
   updateBoard: (todo: Todo, columnId: Status) => void;
+
+  searchString: string;
+  setSearchString: (searchString: string) => void;
 }
 
 export const useBoardStore = create<BoardState>((set) => ({
+  searchString: "",
+  setSearchString: (searchString) => set({ searchString }),
+
   board: {
     columns: new Map<Status, Column>(),
   },
