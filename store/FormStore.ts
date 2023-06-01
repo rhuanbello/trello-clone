@@ -6,6 +6,9 @@ interface FormState {
 
   newTaskType: Status;
   setNewTaskType: (newTaskType: Status) => void;
+
+  image: File | null;
+  setImage: (image: File | null) => void;
 }
 
 export const useFormStore = create<FormState>((set) => ({
@@ -14,4 +17,7 @@ export const useFormStore = create<FormState>((set) => ({
 
   newTaskType: "todo",
   setNewTaskType: (newTaskType) => set({ newTaskType }),
+
+  image: null,
+  setImage: (image) => set({ image }),
 }));
