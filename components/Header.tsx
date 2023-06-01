@@ -18,18 +18,18 @@ export const Header = () => {
   const [suggestion, setSuggestion] = useState('')
 
   useEffect(() => {
-    if (board.columns.size === 0) return;
+    // if (board.columns.size === 0) return;
 
-    setLoading(true)
+    // setLoading(true)
 
-    const fetchSuggestionFunc = async () => {
-      const suggestion = await fetchSuggestion(board)
-      setSuggestion(suggestion)
-      setLoading(false)
+    // const fetchSuggestionFunc = async () => {
+    //   const suggestion = await fetchSuggestion(board)
+    //   setSuggestion(suggestion)
+    //   setLoading(false)
 
-    }
+    // }
 
-    fetchSuggestionFunc()
+    // fetchSuggestionFunc()
   }, [board]);
 
   return (

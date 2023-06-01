@@ -26,8 +26,5 @@ export async function POST(request: Request) {
 
   const { data } = response;
 
-  console.log("GPT DATA", data);
-  console.log(data.choices[0].message);
-
   return NextResponse.json(data.choices[0].message);
 }
